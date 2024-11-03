@@ -1,0 +1,72 @@
+<?php
+include 'db.php'; // Kết nối đến CSDL
+
+// Truy vấn dữ liệu
+$dailyArticles = $conn->query("SELECT * FROM articles WHERE category='daily'");
+$highlightArticles = $conn->query("SELECT * FROM articles WHERE category='highlights'");
+$trendingArticles = $conn->query("SELECT * FROM articles WHERE category='trending'");
+$extraArticles = $conn->query("SELECT * FROM articles WHERE category='extra'");
+
+?>
+
+<main>
+    <div class="content">
+        <div class="top-tabs">
+            <div class="news-daily">
+                <h2>Hàng Ngày</h2>
+                <hr class="title-hr">
+                <?php while ($row = $dailyArticles->fetch_assoc()): ?>
+                    <article>
+                        <h3><a href="#"><?php echo $row['title']; ?></a></h3>
+                        <p><?php echo $row['content']; ?></p>
+                    </article>
+                    <hr class="article-hr">
+                <?php endwhile; ?>
+            </div>
+
+            <div class="news-highlights">
+                <h2>Nổi Bật</h2>
+                <hr class="title-hr">
+                <?php while ($row = $highlightArticles->fetch_assoc()): ?>
+                    <article>
+                        <h3><a href="#"><?php echo $row['title']; ?></a></h3>
+                        <p><?php echo $row['content']; ?></p>
+                    </article>
+                    <hr class="article-hr">
+                <?php endwhile; ?>
+            </div>
+
+            <div class="news-trending">
+                <h2>Đọc Nhiều</h2>
+                <hr class="title-hr">
+                <?php while ($row = $trendingArticles->fetch_assoc()): ?>
+                    <article>
+                        <h3><a href="#"><?php echo $row['title']; ?></a></h3>
+                        <p><?php echo $row['content']; ?></p>
+                    </article>
+                    <hr class="article-hr">
+                <?php endwhile; ?>
+            </div>
+        </div>
+
+        <!-- Tab cuối nằm dưới ba tab trên -->
+        <div class="news-extra">
+            <h2>Thông Tin Khác</h2>
+            <hr class="title-hr">
+            <div class="extra-content">
+                <?php while ($row = $extraArticles->fetch_assoc()): ?>
+                    <article>
+                        <h3><a href="#"><?php echo $row['title']; ?></a></h3>
+                        <p><?php echo $row['content']; ?></p>
+                    </article>
+                    <hr class="article-hr">
+                <?php endwhile; ?>
+            </div>
+        </div>
+    </div>
+</main>
+
+<?php
+// Đóng kết nối
+$conn->close();
+?>
