@@ -10,7 +10,7 @@
         <tr>
             <td>Nhập tên người dùng</td>
             <td>
-                <input type="text" name="user" style="width: 96%;" required>
+                <input type="text" name="username" style="width: 96%;" required>
             </td>
             <td>
                 <input type="email" name="email" style="width: 96%;" required>

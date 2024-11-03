@@ -11,11 +11,11 @@
 
     <div class="wrapper">    
         <?php
-        include 'config/config.php';
-        include 'module/header.php';
-        include 'module/menu.php';
-        include 'module/main.php';
-        include 'module/footer.php';
+        include ("config/config.php");
+        include ("module/header.php");
+        include ("module/menu.php");
+        include ("module/main.php");
+        include ("module/footer.php");
         ?>
     </div>
 </body>
