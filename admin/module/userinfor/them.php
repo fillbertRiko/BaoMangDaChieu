@@ -1,4 +1,4 @@
-<h1>Thêm Người Dùng</h1>
+<h1 style="text-align:center;">Thêm Người Dùng</h1>
 <form method="POST" action="module/userinfor/process.php">
     <table style="width: 80%; text-align: center; align-items: center; border-collapse: collapse;" border="1">
         <tr>
