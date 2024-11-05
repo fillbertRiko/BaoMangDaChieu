@@ -160,3 +160,61 @@ width: 100%;
 margin-bottom: 10px;
 }
 }
+
+.dropdown-content ul {
+    list-style: none; /* Bỏ dấu chấm đầu dòng */
+    padding: 0; /* Bỏ khoảng cách */
+    margin: 0; /* Bỏ lề */
+}
+
+.dropdown-content > ul > li {
+    position: relative; /* Để có thể định vị danh sách con */
+    display: block; /* Hiện mỗi mục ở dạng khối */
+    width: 200px; /* Đặt chiều rộng cố định cho mỗi mục */
+    border-bottom: 1px solid #ccc; /* Thêm đường viền cho các mục */
+}
+
+.dropdown-content > ul > li:last-child {
+    border-bottom: none; /* Không có đường viền cho mục cuối cùng */
+}
+
+.dropdown-content ul li {
+    padding: 10px; /* Khoảng cách cho từng mục */
+    font-size: 14px; /* Kích thước chữ cho danh sách chính */
+}
+
+.dropdown-content ul li a {
+    color: black; /* Màu chữ */
+    text-decoration: none; /* Bỏ gạch chân */
+    display: block; /* Đảm bảo liên kết chiếm toàn bộ chiều rộng */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển tiếp màu nền */
+}
+
+.dropdown-content ul li a:hover {
+    background-color: #f1f1f1; /* Màu nền khi hover */
+}
+
+.sub-dropdown {
+    display: none; /* Ẩn danh sách con */
+    position: absolute; /* Vị trí tuyệt đối cho danh sách con */
+    left: 100%; /* Đưa danh sách con sang bên phải */
+    top: 0; /* Đặt ở cùng chiều cao với mục cha */
+    background-color: #f9f9f9; /* Màu nền của danh sách con */
+    min-width: 150px; /* Độ rộng tối thiểu của danh sách con */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Đổ bóng */
+    z-index: 1; /* Đưa lên trên các phần tử khác */
+}
+
+.dropdown-content ul li:hover .sub-dropdown {
+    display: block; /* Hiện danh sách con khi hover vào mục cha */
+}
+
+.sub-dropdown li {
+    padding: 10px; /* Khoảng cách cho từng mục trong danh sách con */
+}
+
+.sub-dropdown li a {
+    color: black; /* Màu chữ của liên kết trong danh sách con */
+    text-decoration: none; /* Bỏ gạch chân */
+    display: block; /* Đảm bảo liên kết chiếm toàn bộ chiều rộng */
+}

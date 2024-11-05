@@ -2,40 +2,38 @@
 <div class="main">
     <?php
     // Kiểm tra biến action và query từ URL
-    if (isset($_GET['action']) && isset($_GET['query'])) {
-        $tam = $_GET['action'];
-        $query = $_GET['query'];
-    } else {
-        $tam = '';
-        $query = '';
-    }
+    $tam = $_GET['action'] ?? ''; // Sử dụng toán tử null coalescing
+    $query = $_GET['query'] ?? '';
 
-    // Điều hướng theo giá trị của tam và query
-    if ($tam == 'quanlyuserinfor' && $query == 'them') {
-        include("userinfor/them.php");
-        include("userinfor/lietke.php");
-    } elseif ($tam == 'quanlyuserinfor' && $query == 'edit') {
-        include("userinfor/sua.php");
-    } elseif ($tam == 'quanlycontentstorage' && $query == 'them') {
-        include("manager_article_archives/them.php");
-        include("manager_article_archives/lietke.php");
-    } elseif ($tam == 'quanlycontentstorage' && $query == 'edit') {  // Sửa '=' thành '=='
-        include("manager_article_archives/sua.php");
-    } elseif ($tam == 'quanlycontentinfor' && $query == 'them') {
-        include("manage_post_types/them.php");
-        include("manage_post_types/lietke.php");
-    } elseif ($tam == 'quanlycontentinfor' && $query == 'edit') {  // Sửa '=' thành '=='
-        include("manage_post_types/sua.php");  // Đảm bảo rằng đường dẫn này đúng
-    } elseif ($tam == 'quanlytags' && $query == 'them') {
-        include("manage_tags/them.php");
-        include("manage_tags/lietke.php");
-    } elseif ($tam == 'quanlytags' && $query == 'edit') {  // Sửa '=' thành '=='
-        include("manage_tags/sua.php");  // Đảm bảo rằng đường dẫn này đúng
-    } elseif ($tam == 'quanlyuserauthor' && $query == 'them') {
-        include("manage_author/them.php");
-        include("manage_author/lietke.php");
-    } elseif ($tam == 'quanlyuserauthor' && $query == 'edit') {  // Sửa '=' thành '=='
-        include("manage_author/sua.php");  // Đảm bảo rằng đường dẫn này đúng
+    // Mảng điều hướng để ánh xạ các action và query đến file cần include
+    $navigation = [
+        'quanlyuser' => [
+            'them' => ['userinfor/them.php', 'userinfor/lietke.php'],
+            'edit' => ['userinfor/sua.php'],
+        ],
+        'quanlyarticles' => [
+            'them' => ['articles/them.php', 'articles/lietke.php'],
+            'edit' => ['articles/sua.php'],
+        ],
+        'quanlyarticlesday' => [
+            'them' => ['articlesday/them.php', 'articlesday/lietke.php'],
+            'edit' => ['articlesday/sua.php'],
+        ],
+        'quanlyarticlesmost' => [
+            'them' => ['articlesmost/them.php', 'articlesmost/lietke.php'],
+            'edit' => ['articlesmost/sua.php'],
+        ],
+        'quanlyarticlesmore' => [
+            'them' => ['articlesmore/them.php', 'articlesmore/lietke.php'],
+            'edit' => ['articlesmore/sua.php'],
+        ],
+    ];
+
+    // Kiểm tra nếu action và query tồn tại trong mảng điều hướng
+    if (isset($navigation[$tam][$query])) {
+        foreach ($navigation[$tam][$query] as $file) {
+            include($file);
+        }
     } else {
         include("dashboard.php");
     }

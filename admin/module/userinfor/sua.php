@@ -1,10 +1,11 @@
 <?php
+include('config/config.php'); // Kết nối với cơ sở dữ liệu
 
 // Lấy ID người dùng từ URL
 $user_id = intval($_GET['userid']);
 
 // Truy vấn để lấy thông tin người dùng
-$sql_sua_user = "SELECT * FROM users WHERE user_id='$user_id' LIMIT 1";
+$sql_sua_user = "SELECT * FROM user WHERE user_id='$user_id' LIMIT 1";
 $query_sua_user = mysqli_query($mysqli, $sql_sua_user);
 ?>
 
@@ -13,7 +14,7 @@ $query_sua_user = mysqli_query($mysqli, $sql_sua_user);
     <table style="width: 80%; text-align: center; border-collapse: collapse;" border="1">
         <tr>
             <th>Thông tin</th>
-            <th>Tên Người Tạo Bài Viết</th>
+            <th>Tên Người Dùng</th>
             <th>Email</th>
             <th>Mật Khẩu</th>
         </tr>
@@ -30,7 +31,7 @@ $query_sua_user = mysqli_query($mysqli, $sql_sua_user);
                 <input type="email" name="email" style="width: 96%;" value="<?php echo $user['email']; ?>" required>
             </td>
             <td>
-                <input type="password" name="password" style="width: 96%;" placeholder="Nhập mật khẩu mới nếu muốn thay đổi">
+                <input type="text" name="password" style="width: 96%;" placeholder="Nhập mật khẩu mới nếu muốn thay đổi">
             </td>
         </tr>
         <tr>
