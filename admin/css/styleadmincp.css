@@ -1,27 +1,162 @@
+html{
+letter-spacing: 0.2px;
+vertical-align: middle;
+}
+
 ul.admincp_list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+margin: 0;
+padding: 0;
+list-style: none;
 }
 
 ul.admincp_list li {
-    float: left;
-    margin: 5px;
+float: left;
+margin: 5px;
+border: none;
+border-radius: 10px;
+width: 20%;
+}
+
+a{
+text-decoration: none;
+}
+
+.admincp_list {
+list-style: none; /* Xóa dấu chấm đầu dòng */
+padding: 0; /* Xóa padding mặc định */
+margin: 0; /* Xóa margin mặc định */
+display: flex; /* Sử dụng Flexbox để căn đều */
+justify-content: space-around; /* Căn đều các mục */
+background-color: #f8f9fa; /* Màu nền cho toàn bộ menu */
+padding: 10px 0; /* Padding cho menu */
+}
+.admincp_list li {
+margin: 0 10px; /* Khoảng cách giữa các mục */
+padding: 30px 0;
+}
+.admincp_list a {
+display: block; /* Đảm bảo liên kết chiếm toàn bộ ô */
+padding: 15px 20px; /* Padding cho liên kết */
+background-color: #007bff; /* Màu nền cho từng mục */
+color: white; /* Màu chữ */
+text-decoration: none; /* Xóa gạch chân */
+border-radius: 5px; /* Bo góc cho ô */
+transition: background-color 0.3s; /* Hiệu ứng chuyển màu */
+height: 50px;
+text-align: center;
+align-items: center;
+font-weight: bold;
+
+}
+.admincp_list a:hover {
+background-color: #0056b3; /* Màu nền khi hover */
 }
 
 .clear{
-    clear: both;
+clear: both;
+}
+
+.header-title{
+font-size: 18px;
+width: 20%;	
+font-weight: bold;
+}
+
+.input-content{
+width: 80%;
+}
+
+table{
+align-content: center;
 }
 
 h1.title-admin {
-    text-align: center;
-    font-size: 40px;
-    color: blue;
+text-align: center;
+font-size: 40px;
+color: blue;
 }
 
 .wrapper{
-    border: 1px solid black;
-    height: auto;
-    width: 90%;
-    margin: 0 auto;
+border: 1px solid black;
+height: auto;
+width: 90%;
+margin: 0 auto;
+}
+
+body {
+font-family: Arial, sans-serif;
+background-color: #f4f4f4;
+margin: 0;
+padding: 20px;
+}
+
+h1 {
+text-align: center;
+color: #333;
+}
+
+table {
+width: 80%;
+margin: 0 auto;
+border-collapse: collapse;
+background-color: #fff;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+td {
+padding: 12px;
+border: 1px solid #ddd;
+}
+
+td.header-title {
+background-color: #f2f2f2;
+font-weight: bold;
+text-align: right;
+width: 30%;
+}
+
+input[type="text"],
+input[type="datetime-local"],
+input[type="file"],
+select,
+textarea {
+width: 96%;
+padding: 10px;
+margin-top: 5px;
+border: 1px solid #ccc;
+border-radius: 4px;
+font-size: 14px;
+box-sizing: border-box; /* Để padding không làm tăng chiều rộng tổng thể */
+}
+
+input[type="submit"] {
+background-color: #5cb85c;
+color: white;
+border: none;
+padding: 10px 20px;
+cursor: pointer;
+border-radius: 5px;
+font-size: 16px;
+transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+background-color: #4cae4c;
+}
+
+@media (max-width: 768px) {
+table {
+width: 100%;
+}
+
+td {
+display: block;
+width: 100%;
+}
+
+td.header-title {
+text-align: left;
+width: 100%;
+margin-bottom: 10px;
+}
 }

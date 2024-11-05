@@ -1,5 +1,4 @@
 <?php
-include('../../config/config.php');
 
 // Lấy ID người dùng từ URL
 $user_id = intval($_GET['userid']);
