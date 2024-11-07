@@ -23,7 +23,7 @@
 
         // Kết hợp các tin tức thành một chuỗi
         $hotNewsString = implode(" |-----| ", $hotNews);
-        include 'admin/config/config.php';
+        //include 'admin/config/config.php';
         include 'pages/header.php'; 
         include 'pages/menu.php'; 
         ?>

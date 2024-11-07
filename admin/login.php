@@ -1,111 +1,81 @@
 <?php
-session_start();
-include('config/config.php'); // Kết nối với cơ sở dữ liệu
+require('layouts/header.php'); ?>
+<?php
+require('./../connect.php');
+$errors = []; // biến để lưu tất cả các lỗi ở server thực hiện và trả về cho người dùng (1 mảng)
+$success = ""; // là 1 chuỗi thông báo thành công (1 chuỗi)
+?>
 
-// Khởi tạo biến cho thông báo lỗi
-$error = '';
+<?php
+if (isset($_SESSION['account_admin'])) {
+    header('Location: index.php'); // Chuyển đến một trang khác có tên là index.php
+}
+if (isset($_POST['submit'])) {
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
 
-if (isset($_POST['dangnhap'])) {
-    $taikhoan = mysqli_real_escape_string($mysqli, $_POST['username']);
-    $matkhau = $_POST['password']; // Lấy mật khẩu từ biểu mẫu
-
-    // Truy vấn lấy thông tin người dùng
-    $sql = "SELECT * FROM user WHERE username = '$taikhoan' LIMIT 1"; // Sửa tên bảng nếu cần
-    $row = mysqli_query($mysqli, $sql);
-
-    if ($row && mysqli_num_rows($row) > 0) {
-        $user = mysqli_fetch_assoc($row);
-        
-        // Kiểm tra mật khẩu (nên sử dụng password_verify nếu mật khẩu đã mã hóa)
-        if ($matkhau === $user['password']) { // Nếu mật khẩu không mã hóa
-            $_SESSION['dangnhap'] = $taikhoan;
-            header("Location: index.php");
-            exit();
-        } else {
-            $error = "Tài khoản hoặc mật khẩu sai, mời nhập lại.";
-        }
+    /**
+     * Tìm xem có tài khoản nào mà 
+     *  + tên đăng nhập hoặc email trùng với thông tin username ở form 
+     *  + mật khẩu trùng với password ở form
+     * Không có thì thông báo lỗi, để nhập lại.
+     * Nếu có thì lưu thông tin bằng session và load lại trang
+     */
+    $query = "SELECT id, username, email, fullname, gender, phone, birthday FROM accounts WHERE (username = '{$username}' OR email = '{$username}') AND password = '{$password}' AND status = 'ACTIVE' AND role = 'admin'";
+    $result = mysqli_query($conn, $query); // thực hiện lệnh sql => trả về 1 mảng (các bản ghi)
+    // Đếm xem có bao nhiêu bản ghi thỏa mãn mãn câu sql. Nếu mà > 0 => thông báo
+    if (mysqli_num_rows($result) > 0) { // mysqli_num_rows: kiểm tra (đếm) có bao nhiêu bản ghi (rows)
+        // Đăng nhập thành công
+        $account = $result->fetch_array(MYSQLI_ASSOC); //fetch_array đọc kết quả của result (tìm và trả về 1 dòng kết quả của câu truy vấn)
+        $_SESSION['account_admin'] = $account; // $_SESSION: biến toàn cục và là kiểu mảng
+        header('Location: index.php');
     } else {
-        $error = "Tài khoản không tồn tại.";
+        // Đăng nhập thất bại
+        $errors[] = "Thông tin đăng nhập chưa đúng. Vui lòng đăng nhập lại";
     }
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Nhập Quản Trị</title>
-    <link rel="stylesheet" href="css/stylesadmincp.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+<!-- Giao diện đăng nhập -->
+<div class="container">
+    <div class="row">
+        <div class="col col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header text-center">
+                    Đăng nhập
+                </div>
+                <div class="card-body">
+                    <?php if (count($errors) > 0) : ?>
+                        <?php for ($i = 0; $i < count($errors); $i++) : ?>
+                            <p class="errors" style="color: red;"> <?php echo $errors[$i]; ?> </p>
+                        <?php endfor; ?>
+                    <?php endif; ?>
+                    <?php if ($success) : ?>
+                        <p class="success" style="color: green;"> <?php echo $success; ?> </p>
+                    <?php endif; ?>
+                    <form method="post" action="" onsubmit="return handeFormSubmit();">
+                        <div class="form-group">
+                            <label for="username">Email hoặc tên đăng nhập</label>
+                            <input type="text" class="form-control" name="username" id="username" placeholder="Nhập Email hoặc tên đăng nhập">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Mật khẩu</label>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Mật khẩu">
+                        </div>
 
-        .login-container {
-            width: 400px;
-            margin: 100px auto;
-            padding: 20px;
-            background-color: white;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
+                        <button type="submit" class="btn btn-primary mt-4" name='submit'>Đăng nhập</button>
+                        <!-- <button type="button" class="btn btn-primary mt-4">
+                            <a href="forget-password.php">Quên mật khẩu</a>
+                        </button> -->
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-sm-12 col-md-5" style="height:100px; background-color: red;">
 
-        h2 {
-            text-align: center;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input[type="text"],
-        input[type="password"] {
-            width: 95%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            background-color: #5cb85c;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .error-message {
-            color: red;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <h2>Đăng Nhập Quản Trị</h2>
-        <?php if ($error): ?>
-            <div class="error-message"><?php echo $error; ?></div>
-        <?php endif; ?>
-        <form method="POST" action="" autocomplete="off">
-            <label for="username">Tên Đăng Nhập:</label>
-            <input type="text" name="username" id="username" required>
-
-            <label for="password">Mật Khẩu:</label>
-            <input type="password" name="password" id="password" required> <!-- Thay đổi type thành password -->
-
-            <input type="submit" name="dangnhap" value="Đăng Nhập">
-        </form>
+        </div> -->
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-</body>
-</html>
+</div>
+
+<?php
+require('layouts/footer.php'); ?>

@@ -1,9 +1,9 @@
 <?php
-include('../../admin/config/config.php'); // Kết nối với cơ sở dữ liệu
+require "connect.php"; // Kết nối với cơ sở dữ liệu
 
 // Truy vấn để lấy các bài viết
 $sql_daily = "SELECT * FROM articlesday WHERE status = 'published' ORDER BY publication_date DESC LIMIT 5"; // Hàng ngày
-$sql_highlights = "SELECT * FROM articles WHERE status = 'publication_date' ORDER BY article_id DESC LIMIT 5"; // Nổi bật
+$sql_highlights = "SELECT * FROM posts WHERE status = 'status' ORDER BY id DESC LIMIT 5"; // Nổi bật
 $sql_trending = "SELECT * FROM articlesmost WHERE status = 'published' ORDER BY view_count DESC LIMIT 5"; // Đọc nhiều
 $sql_extra = "SELECT * FROM articlesmore WHERE status = 'published' ORDER BY publication_date DESC LIMIT 4 OFFSET 5"; // Đọc thêm
 
@@ -32,8 +32,8 @@ $query_extra = mysqli_query($mysqli, $sql_extra);
             <hr class="title-hr">
             <?php while ($row = mysqli_fetch_array($query_highlights)) { ?>
                 <article>
-                    <h3><a href="article.php?articleid=<?php echo $row['article_id']; ?>"><?php echo $row['title']; ?></a></h3>
-                    <p><?php echo $row['summary']; ?></p>
+                    <h3><a href="article.php?articleid=<?php echo $row['id']; ?>"><?php echo $row['title']; ?></a></h3>
+                    <p><?php echo $row['slug']; ?></p>
                 </article>
                 <hr class="article-hr">
             <?php } ?>
